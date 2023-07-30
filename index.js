@@ -46,6 +46,8 @@ document.getElementById("registrationForm").addEventListener("submit", function 
     const entryData = JSON.parse(localStorage.getItem('entries')) || [];
     entryData.push({ name, email });
     localStorage.setItem('entries', JSON.stringify(entryData));
+
+    loadEntries();
 });
 
  // Function to load existing entries from localStorage
