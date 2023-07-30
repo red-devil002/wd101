@@ -6,35 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="index.js"></script>
-    <head>
-        <title>Registration Form</title>
-        <style>
-            table {
-                border-collapse: collapse;
-                width: 100%;
-            }
-    
-            th, td {
-                border: 1px solid black;
-                padding: 8px;
-                text-align: center;
-            }
-    
-            th {
-                background-color: #f2f2f2;
-            }
-
-        </style>
-    </head>
-    <body>
-<html>
-<head>
     <title>Registration Form</title>
     <style>
         h1 {
             text-align: center;
-            text-shadow: #4CAF50;
+            text-decoration-color: brown;
         }
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +21,6 @@
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
-            box-shadow:inset;
         }
         form input, form textarea {
             width: 100%;
@@ -77,23 +52,23 @@
     <h1>Registration Form</h1>
     <form id="registrationForm">
         <label for="name">Name:</label>
-        <input required text="text" id="name" name="name" placeholder="Enter your full name">
+        <input required type="text" id="name" name="name" placeholder="Enter Full Name">
 
         <label for="email">Email:</label>
-        <input required type="email" id="email" name="email" placeholder="Enter your email">
+        <input required type="email" id="email" name="email" placeholder="Enter Email">
 
         <label for="password">Password:</label>
-        <input required type="password" id="password" name="password" placeholder="Enter password">
+        <input required type="password" id="password" name="password" placeholder="Enter Password">
 
         <label for="dob">Date of Birth:</label>
-        <input required type="date" id="dob" name="dob" >
+        <input type="date" id="dob" name="dob" required>
 
         <label for="acceptedTerms">Accepted terms?</label>
-        <input required type="checkbox" id="acceptedTerms" name="acceptedTerms">
+        <input type="checkbox" id="acceptedTerms" name="acceptedTerms">
 
         <button type="submit">Register</button>
     </form>
-
+    <script src="index.js"></script>
     <h1>Registered Users</h1>
     <table id="userTable">
         <thead>
@@ -108,8 +83,7 @@
         <tbody>
         </tbody>
     </table>
-</body>
-</html>
+
 
     
 </body>
