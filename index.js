@@ -1,71 +1,67 @@
-// Function to handle form submission
-document.getElementById("registrationForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    // Get form values
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const dob = new Date(document.getElementById("dob").value);
-    const acceptedTerms = document.getElementById("acceptedTerms").checked;
-
-    // Validate age between 18 and 55
-    const age = new Date().getFullYear() - dob.getFullYear();
-    if (age < 18 || age > 55) {
-        alert("You must be between 18 and 55 years old to register.");
-        return;
+let userForm = document.getElementById("user-form");
+let userEntries=[];
+const retrieveEntries = ()=>{
+    let entries = localStorage.getItem('userEntries');
+    if(entries){
+        entries=JSON.parse(entries);
+    }else{
+        entries=[];
     }
+    return entries;
+};
+const displayEntries = () => {
+  let entries = retrieveEntries();
+  const tableEntries = entries
+    .map((input) => {
+      const namedata = `<td class='border px-4 py-2'>${input.FullName}</td>`;
+      const emaildata = `<td class='border px-4 py-2'>${input.email}</td>`;
+      const passworddata = `<td class='border px-4 py-2'>${input.password}</td>`;
+      const dobdata = `<td class='border px-4 py-2'>${input.dob}</td>`;
+      const termsdata = `<td class='border px-4 py-2'>${input.terms}</td>`;
+      const row = `<tr>${namedata} ${emaildata} ${passworddata} ${dobdata} ${termsdata}</tr>`;
+      return row;
+    })
+    .join('\n');
+  const tableBody = document.querySelector('#user-entries tbody');
+  tableBody.innerHTML = tableEntries; // Add the table entries to the <tbody> element
+};
 
-    // Create a new table row for the entry
-    const tableBody = document.getElementById("userTable");
-    const newRow = tableBody.insertRow();
 
-    // Add data to the row
-    const nameCell = newRow.insertCell();
-    const emailCell = newRow.insertCell();
-    const passwordCell = newRow.insertCell();
-    const dobCell = newRow.insertCell();
-    const acceptedTermsCell = newRow.insertCell();
+const saveUserForm = (event)=>{
+event.preventDefault();
+const FullName = document.getElementById('name').value
+const email = document.getElementById('email').value
+const password = document.getElementById('password').value
+const dob = document.getElementById('dob').value
+const terms = document.getElementById('terms').checked
+var currentYear = new Date().getFullYear();
+var birthYear = dob.split("-");
+let year=birthYear[0]
+var age = currentYear-year
+console.log({age,currentYear,birthYear});
+if(age < 18 || age > 55){
+    document.getElementById('dob')
+  return  alert("Age must be between 18 and 55")
 
-    nameCell.textContent = name;
-    emailCell.textContent = email;
-    passwordCell.textContent = password;
-    dobCell.textContent = dob.toDateString();
-    acceptedTermsCell.textContent = acceptedTerms ? "Yes" : "No";
-
-    
-
-    // Clear the form fields after submission
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("dob").value = "";
-    document.getElementById("acceptedTerms").checked = false;
-
-    // Save the data to localStorage
-    const entryData = JSON.parse(localStorage.getItem('entries')) || [];
-    entryData.push({ name, email });
-    localStorage.setItem('entries', JSON.stringify(entryData));
-
-    loadEntries();
-});
-
- // Function to load existing entries from localStorage
- function loadEntries() {
-    const entryData = JSON.parse(localStorage.getItem('entries')) || [];
-    for (const entry of entryData) {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `<td>${entry.name}</td><td>${entry.email}</td>`;
-        entryTableBody.appendChild(newRow);
-    }
 }
+else
+{
+    document.getElementById('dob')
 
-// Event listener for form submission
-registrationForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    updateTable();
-    registrationForm.reset();
-});
-
-// Load existing entries on page load
-loadEntries();
+    const input =
+    {
+        FullName,
+        email,
+        password,
+        dob,
+        terms
+     };
+     userEntries = retrieveEntries();
+     userEntries.push(input);
+     localStorage.setItem("userEntries",JSON.stringify(userEntries));
+     displayEntries();
+     userForm.reset();
+}
+};
+userForm.addEventListener('submit',saveUserForm)
+displayEntries()
